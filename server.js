@@ -1,27 +1,16 @@
 import express from "express";
-import * as tsImport from 'ts-import';
-// import edgeTTS from "edge-tts"; // need to be import by tsImport
+import { fileURLToPath } from 'url';
+import path from 'path';
+// import * as tsImport from 'ts-import';
+
 import cors from "cors";
 import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 
 // Fix __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function createServer() {
-  // Correctly create the absolute path to edge-tts module
-  const edgeTtsPath = path.join(__dirname, 'node_modules', 'edge-tts', 'index.ts');
-  try {
-    // Dynamically import edgeTTS using ts-import
-    const edgeTTS = await tsImport.load(edgeTtsPath);
-    console.log("edgeTTS module loaded successfully.");
-    // Now you can use edgeTTS here
-  } catch (error) {
-    console.error("Error loading edgeTTS:", error);
-  }
-
   const app = express();
   const PORT = 5000;
 
