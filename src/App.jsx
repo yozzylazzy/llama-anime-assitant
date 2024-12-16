@@ -1,31 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Character2d from './components/Character2d'
+import Character2d from "./components/Character2d";
+import ChatBox from "./components/ChatBot";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <h1>Hello Stranger</h1>
-      <div className="chat">
-        <div className="messages">
-          <ul className="message-list">
-            <li className="message-item item-primary card">
-              Bot says: Hey, how are you?
-            </li>
-          </ul>
-          <div className="message-input">
-            <input type="text" placeholder="Type your message..." />
-            <button type="button" className="btn">Send</button>
-          </div>
-        </div>
+    <div className="grid grid-cols-5 gap-3 h-screen">
+      {/* Left Character */}
+      <div className="col-span-2 flex justify-center items-center bg-gray-200 p-4">
+        <Character2d />
       </div>
-      <Character2d />
-    </>
-  )
-}
 
-export default App
+      {/* Right Chat */}
+      <div className="bg-gray-50 p-6 col-span-3">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">AI Assistant</h1>
+        <ChatBox />
+      </div>
+    </div>
+  );
+};
+
+export default App;
