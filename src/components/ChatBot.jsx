@@ -1,44 +1,60 @@
 import { useState } from "react";
 import getChatResponse from "../api/getChatResponse";
+import markdownit from "markdown-it";
+import generateTTS from "../services/tts";
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Hey there! How can I assist you today?" },
   ]);
   const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  // enable everything
+  const md = markdownit({
+    html: true,
+    linkify: true,
+    typographer: true
+  })
 
   const handleSend = async () => {
     if (input.trim() === "") return;
 
     // Add user message
-    setMessages([...messages, { sender: "user", text: input }]);
+    const newMessages = [...messages, { sender: "user", text: input }];
+    setMessages(newMessages);
     setInput("");
+    setIsTyping(true);
 
     try {
-      const botResponse = await getChatResponse(input);
+      const botResponse = await getChatResponse(
+        newMessages.map((msg) => `${msg.sender}: ${msg.text}`).join("\n")
+      );
+
       setMessages((prevMessages) => [
         ...prevMessages,
         { sender: "bot", text: botResponse },
-      ])
+      ]);
+
+      const audioUrl = await generateTTS(botResponse);
+      if (audioUrl) {
+        const audio = new Audio(audioUrl);
+        audio.play();
+      }
+
     } catch (error) {
       console.error("Error fetching response:", error);
       setMessages((prevMessages) => [
         ...prevMessages,
         { sender: "bot", text: "Sorry, there was an error!" },
       ]);
+    } finally {
+      setIsTyping(false);
     }
-
-    // Simulate bot response
-    // setTimeout(() => {
-    //   setMessages((prev) => [
-    //     ...prev,
-    //     { sender: "bot", text: "I'm here to help! Ask me anything." },
-    //   ]);
-    // }, 1000);
   };
 
   return (
-    <div className="flex flex-col h-full p-4 bg-gray-100 rounded-lg shadow-lg">
+    <div className="flex flex-col h-full p-4 bg-gray-100 rounded-lg shadow-lg max-h-svh overflow-y-scroll">
       {/* Chat Messages */}
       <div className="flex-grow overflow-y-auto space-y-4">
         {messages.map((message, index) => (
@@ -52,11 +68,23 @@ const ChatBox = () => {
                 ? "bg-blue-500 text-white"
                 : "bg-gray-300 text-gray-900"
                 }`}
+              dangerouslySetInnerHTML={{
+                __html: md.render(message.text),
+              }}
             >
-              {message.text}
+              {/* {textParsed(message.text)} */}
+              {/* {message.text} */}
+              {/* <div dangerouslySetInnerHTML={{ __html: formatMarkdownToHTML(message.text) }} /> */}
             </div>
           </div>
         ))}
+        {isTyping && (
+          <div className="flex justify-start">
+            <div className="max-w-xs p-3 rounded-lg bg-gray-300 text-gray-900">
+              ...
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Input Field */}

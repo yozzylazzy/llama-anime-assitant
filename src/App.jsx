@@ -3,7 +3,8 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import {
   About,
   Chat,
-  Conversation
+  Conversation,
+  User
 } from './pages';
 import Navbar from './components/Navbar';
 
@@ -15,8 +16,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Conversation />} />
           <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Chat />} />
-          {/* <Route path="/contact" element={<Contact />} /> */}
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/userPref" element={<User />} />
         </Routes>
       </Router>
     </main>
