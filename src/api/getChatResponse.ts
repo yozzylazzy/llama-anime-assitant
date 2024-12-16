@@ -11,6 +11,7 @@ const getChatResponse = async (userMessage) => {
     const chatResponse = await client.chat.completions.create(
       {
         model: "llama3",
+        // model: "mistrall",
         // messages: message,
         messages: [
           {
