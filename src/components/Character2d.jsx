@@ -43,6 +43,20 @@ const Character2d = () => {
           // the body is hit
         }
       });
+
+
+      // Responsif terhadap perubahan ukuran layar
+      const handleResize = () => {
+        // Resize model sesuai ukuran layar
+        model.position.set(window.innerWidth / 2, window.innerHeight / 2);
+        model.scale.set(0.3, 0.3);  // Anda bisa menyesuaikan skala sesuai dengan ukuran layar
+      };
+      // Event listener untuk perubahan ukuran layar
+      window.addEventListener('resize', handleResize);
+      // Menghapus event listener saat komponen dibersihkan
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
     });
   }, []);
 

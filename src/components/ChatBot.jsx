@@ -1,4 +1,5 @@
 import { useState } from "react";
+import getChatResponse from "../api/getChatResponse";
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([
@@ -6,20 +7,34 @@ const ChatBox = () => {
   ]);
   const [input, setInput] = useState("");
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim() === "") return;
 
     // Add user message
     setMessages([...messages, { sender: "user", text: input }]);
     setInput("");
 
-    // Simulate bot response
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { sender: "bot", text: "I'm here to help! Ask me anything." },
+    try {
+      const botResponse = await getChatResponse(input);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "bot", text: botResponse },
+      ])
+    } catch (error) {
+      console.error("Error fetching response:", error);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "bot", text: "Sorry, there was an error!" },
       ]);
-    }, 1000);
+    }
+
+    // Simulate bot response
+    // setTimeout(() => {
+    //   setMessages((prev) => [
+    //     ...prev,
+    //     { sender: "bot", text: "I'm here to help! Ask me anything." },
+    //   ]);
+    // }, 1000);
   };
 
   return (
@@ -34,8 +49,8 @@ const ChatBox = () => {
           >
             <div
               className={`max-w-xs p-3 rounded-lg ${message.sender === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-300 text-gray-900"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-300 text-gray-900"
                 }`}
             >
               {message.text}
