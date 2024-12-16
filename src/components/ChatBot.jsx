@@ -2,13 +2,16 @@ import { useState } from "react";
 import getChatResponse from "../api/getChatResponse";
 import markdownit from "markdown-it";
 import generateTTS from "../services/tts";
+import { useChat } from "../context/ChatContext";
 
 const ChatBox = () => {
-  const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hey there! How can I assist you today?" },
-  ]);
-  const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+  // const [messages, setMessages] = useState([
+  //   { sender: "bot", text: "Hey there! How can I assist you today?" },
+  // ]);
+  // const [input, setInput] = useState("");
+  // const [isTyping, setIsTyping] = useState(false);
+  const [audioUrl, setAudioUrl] = useState(null);
+  const { messages, setMessages, input, setInput, isTyping, setIsTyping, isTalking, setIsTalking } = useChat();
 
   // enable everything
   const md = markdownit({
@@ -31,17 +34,48 @@ const ChatBox = () => {
         newMessages.map((msg) => `${msg.sender}: ${msg.text}`).join("\n")
       );
 
+      // Add a bot response message (without audio initially)
+      const botMessage = { sender: "bot", text: "" };  // Empty message to simulate typing
       setMessages((prevMessages) => [
         ...prevMessages,
         { sender: "bot", text: botResponse },
       ]);
 
       const audioUrl = await generateTTS(botResponse);
+      setAudioUrl(audioUrl);
+
       if (audioUrl) {
         const audio = new Audio(audioUrl);
-        audio.play();
-      }
+        // Wait for the audio to finish before proceeding
+        audio.onloadedmetadata = () => {
+          const audioDuration = audio.duration * 1000; // Duration in milliseconds
+          // Play the audio
+          audio.play();
+          setIsTalking(true); // Set isTalking to true when the bot starts speaking
 
+          // Simulate typing effect by gradually revealing the message
+          let charIndex = 0;
+          const interval = audioDuration / botResponse.length; // Interval for each character to appear
+          const typingInterval = setInterval(() => {
+            if (charIndex < botResponse.length) {
+              botMessage.text = botResponse.slice(0, charIndex + 1);
+              setMessages((prevMessages) => {
+                const updatedMessages = [...prevMessages];
+                updatedMessages[updatedMessages.length - 1] = botMessage; // Update last message
+                return updatedMessages;
+              });
+              charIndex++;
+            } else {
+              clearInterval(typingInterval); // Stop typing once the message is fully revealed
+            }
+          }, interval);
+
+          audio.onended = () => {
+            setIsTalking(false); // Reset isTalking to false when the audio ends
+          };
+        };
+        // audio.play();
+      }
     } catch (error) {
       console.error("Error fetching response:", error);
       setMessages((prevMessages) => [
