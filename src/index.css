@@ -22,6 +22,45 @@ body:has(.card[data-color="green"]:hover) {
   background-color: rgb(var(--green-rgb) / 25%);
 }
 
+/* index.css */
+
+.nav-link {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #4a628a; /* Default color */
+  letter-spacing: 0.15em; /* 150 units spacing */
+  font-weight: 500;
+}
+
+.nav-link-active {
+  color: #4a628a; /* Active link color */
+  font-weight: bold; /* Bold text */
+}
+
+/* Card Container */
+.card {
+  background-color: #b9e5e8; /* Semi-transparent background */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px #4a628a; /* Subtle shadow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px; /* Card width */
+  height: 80px; /* Card height */
+  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.card img {
+  width: 48px; /* Icon width */
+  height: 48px; /* Icon height */
+  object-fit: contain;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Lift card on hover */
+}
+
+
 @layer utilities {
   .max-container {
     @apply max-w-5xl mx-auto sm:p-16 pb-12 !pt-[126px] px-8 min-h-[calc(100vh-80px)];
@@ -52,7 +91,7 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .header {
-    @apply flex justify-between items-center sm:px-16 px-8 py-4 max-w-5xl mx-auto absolute top-0 bg-transparent z-10 right-0 left-0;
+    @apply flex justify-between items-center sm:px-8 px-8 py-4 max-w-5xl mx-auto absolute top-0 bg-transparent z-10 right-0 left-0;
   }
 
   .footer {

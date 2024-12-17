@@ -10,14 +10,14 @@ const Character2d = () => {
   const { isTalking } = useChat();
 
   useEffect(() => {
-    // const cubism2Model =
-    //   'https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json';
+    const cubism2Model =
+      'https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json';
     // const cubism2Model =
     //   'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json';
     // const cubism2Model = "/cubism/wanko/wanko/runtime/wanko_touch.model3.json";
     // const cubism2Model = "/cubism/Epsilon/Epsilon/runtime/Epsilon.model3.json";
     // const cubism2Model = "/cubism/koharu_haruto/koharu_haruto/é¦é-éT/runtime/koharu.model3.json";
-    const cubism2Model = "/cubism/tororo_hijiki/tororo_hijiki/tororo/runtime/tororo.model3.json";
+    // const cubism2Model = "/cubism/tororo_hijiki/tororo_hijiki/tororo/runtime/tororo.model3.json";
 
     // Initialize PIXI application
     const app = new PIXI.Application({

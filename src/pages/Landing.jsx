@@ -1,11 +1,12 @@
 import Navbar from "../components/Navbar";
 import HeroSection from "../components/HeroSection";
-import Footer from "../components/Footer";
-import Feature from "../components/FeatureCard";
 
 const Landing = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 text-gray-900 pt-16">
+    <div className="min-h-screen bg-gradient-to-b pt-16"
+      style={{
+        background: "linear-gradient(to right, #dff2eb, #b9e5e8)",
+      }}>
       <Navbar />
       <HeroSection />
     </div>
