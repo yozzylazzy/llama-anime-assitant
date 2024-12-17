@@ -7,6 +7,7 @@ import {
   User
 } from './pages';
 import Navbar from './components/Navbar';
+import Landing from './pages/Landing';
 
 const App = () => {
   return (
@@ -14,7 +15,8 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Conversation />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/conversation" element={<Conversation />} />
           <Route path="/about" element={<About />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/userPref" element={<User />} />
