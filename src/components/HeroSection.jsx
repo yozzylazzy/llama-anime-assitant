@@ -1,3 +1,4 @@
+import CharacterSelection from "./CharacterSelection";
 import Feature from "./FeatureCard";
 
 const HeroSection = () => {
@@ -20,7 +21,7 @@ const HeroSection = () => {
         </div>
 
         {/* Right Side */}
-        <div className="w-full h-64 bg-blue-900 rounded-lg"></div>
+        <CharacterSelection />
       </div>
     </section>
   );
