@@ -1,23 +1,21 @@
-import { useState } from "react";
 import getChatResponse from "../api/getChatResponse";
 import markdownit from "markdown-it";
 import generateTTS from "../services/tts";
 import { useChat } from "../context/ChatContext";
+import { removeEmojisAndPattern } from "../../lib/utils";
 
 const ChatBox = () => {
-  // const [messages, setMessages] = useState([
-  //   { sender: "bot", text: "Hey there! How can I assist you today?" },
-  // ]);
-  // const [input, setInput] = useState("");
-  // const [isTyping, setIsTyping] = useState(false);
-  const [audioUrl, setAudioUrl] = useState(null);
-  const { messages, setMessages, input, setInput, isTyping, setIsTyping, isTalking, setIsTalking } = useChat();
+  const {
+    messages, setMessages, input, setInput,
+    isTyping, setIsTyping, setIsTalking,
+    setAudioUrl
+  } = useChat();
 
   // enable everything
   const md = markdownit({
     html: true,
     linkify: true,
-    typographer: true
+    typographer: true,
   })
 
   const handleSend = async () => {
@@ -30,9 +28,12 @@ const ChatBox = () => {
     setIsTyping(true);
 
     try {
-      const botResponse = await getChatResponse(
+      let botResponse = await getChatResponse(
         newMessages.map((msg) => `${msg.sender}: ${msg.text}`).join("\n")
       );
+
+      // Filter the bot responses
+      botResponse = removeEmojisAndPattern(botResponse);
 
       // Add a bot response message (without audio initially)
       const botMessage = { sender: "bot", text: "" };  // Empty message to simulate typing
@@ -49,10 +50,7 @@ const ChatBox = () => {
         // Wait for the audio to finish before proceeding
         audio.onloadedmetadata = () => {
           const audioDuration = audio.duration * 1000; // Duration in milliseconds
-          // Play the audio
-          audio.play();
           setIsTalking(true); // Set isTalking to true when the bot starts speaking
-
           // Simulate typing effect by gradually revealing the message
           let charIndex = 0;
           const interval = audioDuration / botResponse.length; // Interval for each character to appear
@@ -69,12 +67,7 @@ const ChatBox = () => {
               clearInterval(typingInterval); // Stop typing once the message is fully revealed
             }
           }, interval);
-
-          audio.onended = () => {
-            setIsTalking(false); // Reset isTalking to false when the audio ends
-          };
         };
-        // audio.play();
       }
     } catch (error) {
       console.error("Error fetching response:", error);

@@ -1,88 +1,60 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as PIXI from "pixi.js";
-import { Live2DModel } from "pixi-live2d-display";
+import { Live2DModel } from "pixi-live2d-display-lipsyncpatch";
+
+window.PIXI = PIXI;
 
 const CharacterSelection = () => {
-  const canvasRef = useRef(null);
-  const [app, setApp] = useState(null);
-  const [selectedModel, setSelectedModel] = useState("/cubism/tororo_hijiki/tororo_hijiki/tororo/runtime/tororo.model3.json");
+  const [selectedModel, setSelectedModel] = useState("https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/tororo/tororo.model.json");
 
   // List of character models
   const models = [
-    { name: "Tororo", url: "/cubism/tororo_hijiki/tororo_hijiki/tororo/runtime/tororo.model3.json" },
+    { name: "Tororo", url: "https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/tororo/tororo.model.json" },
     { name: "Wanko", url: "/cubism/wanko/wanko/runtime/wanko_touch.model3.json" },
     { name: "Senko", url: "https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json" },
+    { name: "Shizuku", url: "https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json" },
+    { name: "Shizuku", url: "https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json" },
   ];
 
-  // Jangan pakai ini
   useEffect(() => {
-    const pixiApp = new PIXI.Application({
-      transparent: true,
-      resizeTo: canvasRef.current,
+    // Initialize PIXI application
+    const app = new PIXI.Application({
+      view: document.getElementById('canvas-home'),
+      autoStart: true,
+      resizeTo: window,
+      backgroundAlpha: 0, // Transparent background
     });
 
-    canvasRef.current.appendChild(pixiApp.view);
-    setApp(pixiApp);
-
-    // Handler untuk resize
-    const handleResize = () => {
-      const model = pixiApp.stage.children[0];
-      if (model) {
-        model.position.set(canvasRef.current.offsetWidth / 2, canvasRef.current.offsetHeight / 2);
-        model.scale.set(0.2, 0.2);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      pixiApp.destroy(true, { children: true, texture: true, baseTexture: true });
-    };
-  }, []);
-
-  // Jangan pakai ini
-  useEffect(() => {
-    if (!app || !selectedModel) return;
-
-    app.stage.removeChildren();
-
+    // Load Live2D model
     Live2DModel.from(selectedModel).then((model) => {
-      model.anchor.set(0.5, 0.5);
-      model.position.set(canvasRef.current.offsetWidth / 2, canvasRef.current.offsetHeight / 2);
-      model.scale.set(0.2, 0.2);
-
-      console.log(canvasRef.current.offsetWidth / 2, canvasRef.current.offsetHeight / 2);
-
       app.stage.addChild(model);
 
-      const canvasElement = app.view;
-      const handlePointerMove = (event) => model.focus(event.clientX, event.clientY);
-      const handlePointerDown = (event) => model.tap(event.clientX, event.clientY);
+      // Center model in canvas
+      model.anchor.set(0.5, 0.5);
+      model.position.set(window.innerWidth / 2, window.innerHeight / 2);
+      model.scale.set(0.3, 0.3);
 
-      canvasElement.addEventListener("pointermove", handlePointerMove);
-      canvasElement.addEventListener("pointerdown", handlePointerDown);
-
-      // Cleanup pointer events when component updates
-      return () => {
-        canvasElement.removeEventListener("pointermove", handlePointerMove);
-        canvasElement.removeEventListener("pointerdown", handlePointerDown);
+      // Handle window resize
+      const handleResize = () => {
+        model.position.set(window.innerWidth / 2, window.innerHeight / 2);
+        model.scale.set(0.3, 0.3);
       };
+      window.addEventListener('resize', handleResize);
     });
-  }, [app, selectedModel]);
+  }, [selectedModel]);
 
 
   return (
     <div className="flex gap-4 flex-col items-center justify-center w-full h-full">
       {/* Model Canvas */}
-      <div
-        ref={canvasRef}
+      <canvas
+        id="canvas-home"
         className="w-full md:w-1/2 lg:w-3/4 h-[400px] mx-auto rounded-xl"
         style={{
           overflow: "hidden",
           backgroundColor: "#4a628a",
         }}
-      />
+      ></canvas>
 
       {/* Character Selection */}
       <div className="flex flex-row items-center justify-center gap-4 pt-5">

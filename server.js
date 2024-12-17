@@ -83,12 +83,21 @@ async function createServer() {
     const audioId = req.params.id; // Extract the audio ID from the URL
     const filePath = path.join(__dirname, 'audio', `${audioId}.mp3`); // Construct the file path
 
+    // Check if the file exists
     if (fs.existsSync(filePath)) {
-      // If the file exists, send it as a response
-      res.sendFile(filePath);
+      // Delete the file
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error("Error deleting file:", err);
+          return res.status(500).json({ error: "Failed to delete the audio file." });
+        }
+        return res.status(200).json({
+          message: `Audio file ${audioId}.mp3 deleted successfully.`,
+        });
+      });
     } else {
-      // If the file doesn't exist, send a 404 error
-      res.status(404).send('Audio file not found');
+      // If the file doesn't exist
+      return res.status(404).json({ error: "Audio file not found." });
     }
   });
 
