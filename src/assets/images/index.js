@@ -9,6 +9,7 @@ import express from './express.png'
 import react from './react.png'
 import mongodb from './mongodb.png'
 import llama from './llama.png'
+import catPixel from './cat-pixel.png';
 
 export {
     hero,
@@ -21,5 +22,6 @@ export {
     express,
     llama,
     mongodb,
-    react
+    react,
+    catPixel
 }

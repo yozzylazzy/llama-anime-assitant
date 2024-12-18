@@ -27,11 +27,9 @@ const Character2d = () => {
       backgroundAlpha: 0, // Transparent background
     });
 
-    console.log(cubism2Model);
-
     try {
       // Load Live2D model
-      Live2DModel.from(cubism2Model, { autoInteract: false }).then((model) => {
+      Live2DModel.from(cubism2Model, { autoHitTest: false, autoFocus: false }).then((model) => {
         app.stage.addChild(model);
 
         // Center model in canvas
