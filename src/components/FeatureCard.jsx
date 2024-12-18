@@ -16,7 +16,7 @@ const Feature = () => {
   ];
 
   return (
-    <section className="flex justify-center md:justify-start items-center gap-10 md:gap-6 py-8">
+    <section className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 py-8">
       {icons.map((icon, index) => (
         <div className="card" key={index}>
           <img

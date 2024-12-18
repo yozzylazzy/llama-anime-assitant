@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <header className="header collapse md:visible">
+    <header className="header hidden md:flex">
       <NavLink to="/" className="rounded-lg bg-white items-center justify-center flex font-bold shadow-md px-3 py-2">
         <p className="blue-gradient_text">PIXIEPAL ASSISTANT</p>
       </NavLink>

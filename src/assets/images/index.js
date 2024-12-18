@@ -10,6 +10,8 @@ import react from './react.png'
 import mongodb from './mongodb.png'
 import llama from './llama.png'
 import catPixel from './cat-pixel.png';
+import star from './star.png';
+import decor from './decor.png';
 
 export {
     hero,
@@ -23,5 +25,7 @@ export {
     llama,
     mongodb,
     react,
-    catPixel
+    catPixel,
+    star,
+    decor
 }

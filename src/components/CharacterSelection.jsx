@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as PIXI from "pixi.js";
 import { Live2DModel } from "pixi-live2d-display-lipsyncpatch";
 import { catPixel } from "../assets/images";
+import { aiPreferences } from "../constants";
 
 window.PIXI = PIXI;
 
@@ -9,17 +10,6 @@ const CharacterSelection = () => {
   const canvasRef = useRef(null); // referensi untuk ukuran canvasnya
   const [app, setApp] = useState(null);
   const [selectedModel, setSelectedModel] = useState("https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/tororo/tororo.model.json");
-
-  // List of character models
-  const models = [
-    { name: "Tororo", url: "https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/tororo/tororo.model.json" },
-    { name: "Wanko", url: "http://localhost:5174//cubism/wanko/wanko/runtime/wanko_touch.model3.json" },
-    { name: "Senko", url: "https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json" },
-    { name: "Shizuku", url: "https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json" },
-    { name: "Shizuku", url: "https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json" },
-    { name: "Shizuku", url: "https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json" },
-    { name: "Shizuku", url: "https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json" },
-  ];
 
   useEffect(() => {
     // Inisialisasi PIXI Application
@@ -44,7 +34,15 @@ const CharacterSelection = () => {
       if (model) {
         console.log('Masuk ke perubahan');
         model.position.set(canvasWidth / 2, canvasHeight / 2);
-        model.scale.set(0.2, 0.2);
+        // Hitung skala dinamis berdasarkan ukuran container
+        const modelWidth = model.width;
+        const modelHeight = model.height;
+        const scaleX = canvasWidth / modelWidth;
+        const scaleY = canvasHeight / modelHeight;
+        const uniformScale = Math.min(scaleX, scaleY); // *0.9 untuk memberikan sedikit margin
+
+        model.scale.set(uniformScale, uniformScale);
+        // model.scale.set(0.2, 0.2);
       }
     };
     window.addEventListener("resize", handleResize);
@@ -84,7 +82,42 @@ const CharacterSelection = () => {
     Live2DModel.from(selectedModel).then((model) => {
       model.anchor.set(0.5, 0.5);
       model.position.set(canvasWidth / 2, canvasHeight / 2);
-      model.scale.set(0.2, 0.2);
+
+      // model.scale.set(0.2, 0.2);
+      // Hitung skala dinamis berdasarkan ukuran container
+      const modelWidth = model.width;
+      const modelHeight = model.height;
+      const scaleX = canvasWidth / modelWidth;
+      const scaleY = canvasHeight / modelHeight;
+      const uniformScale = Math.min(scaleX, scaleY); // *0.9 untuk memberikan sedikit margin
+
+      model.scale.set(uniformScale, uniformScale);
+
+      // interaction
+      model.on('hit', (hitAreas) => {
+        if (hitAreas.length > 0) {
+          console.log(`Area hit: ${hitAreas}`);
+
+          // Ambil grup motion yang ada
+          const motionGroups = model.internalModel.motionManager.groups;
+          console.log("Motion groups:", motionGroups);
+
+          // Pilih grup animasi yang sesuai (contoh: 'Tap')
+          const motionGroup = motionGroups["Tap"] || motionGroups["Idle"] || [];
+
+          if (motionGroup.length > 0) {
+            // Pilih animasi secara acak
+            const randomMotionIndex = Math.floor(Math.random() * motionGroup.length);
+            const motionName = motionGroup[randomMotionIndex];
+
+            console.log(`Playing motion: ${motionName}`);
+            model.motion("Tap", motionName);
+          } else {
+            console.log("No available motions in group 'Tap'.");
+          }
+        }
+      });
+
       console.log(model ? 'Model ditemukan' : 'Tidak ada model')
 
       try {
@@ -107,35 +140,24 @@ const CharacterSelection = () => {
       />
 
       {/* Character Selection */}
-      <div className="flex flex-row items-center justify-center gap-4 pt-5 max-w-md overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-        {models.map((char, index) => (
-          <button
-            key={index}
-            onClick={() => setSelectedModel(char.url)}
-            className=""
-          >
-            <img
-              src={catPixel}
-              alt={char.name}
-              className="object-cover w-full h-full mb-2"
-            />
-            <span>{char.name}</span>
-          </button>
-        ))}
-        {/* {models.map((char, index) => (
-          <button
-            key={index}
-            onClick={() => setSelectedModel(char.url)}
-            className="flex flex-col items-center p-2 border border-gray-300 rounded-full shadow hover:bg-gray-100 w-20 h-20 overflow-hidden"
-          >
-            <img
-              src={catPixel}
-              alt={char.name}
-              className="object-cover w-20 h-20 mb-2"
-            />
-            <span>{char.name}</span>
-          </button>
-        ))} */}
+      <div className="w-full md:w-3/4 overflow-x-auto py-5">
+        <section className="flex gap-4 justify-center w-max">
+          {aiPreferences.map((char, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <button
+                onClick={() => setSelectedModel(char.modelData)}
+                className="flex flex-col items-center p-2 border border-gray-300 rounded-2xl shadow hover:bg-gray-100 w-28 h-36 overflow-hidden"
+              >
+                <img
+                  src={catPixel}
+                  alt={char.name}
+                  className="object-cover w-20 h-20 mb-4"
+                />
+                <span className="text-center text-sm font-bold uppercase">{char.name}</span>
+              </button>
+            </div>
+          ))}
+        </section>
       </div>
     </div>
   );
