@@ -20,7 +20,7 @@ async function createServer() {
   app.use('/audio', express.static(path.join(__dirname, 'audio')));
 
   app.post("/api/tts", async (req, res) => {
-    const { text, rate, volume, pitch,  characterEdgeConfig } = req.body;
+    const { text, rate, volume, pitch, characterEdgeConfig } = req.body;
 
     if (!text) {
       return res.status(400).json({ error: "Text is required." });

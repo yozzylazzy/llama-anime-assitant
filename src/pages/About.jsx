@@ -1,10 +1,13 @@
+import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
+import { experiences, skills } from '../constants';
+import CTA from '../components/CTA';
 
 const About = () => {
   return (
     <section className='max-container'>
       <h1 className='head-text'>
-        Hello, I'm <span className='blue-gradient_text font-semibold drop-shadow'>Yosef Adrian</span>
+        Hello, I&apos;m <span className='blue-gradient_text font-semibold drop-shadow'>Yosef Adrian</span>
       </h1>
       <div className='mt-5 flex flex-col gap-3 text-slate-500'>
         <p>
@@ -15,9 +18,9 @@ const About = () => {
       <div className='py-10 flex flex-col'>
         <h3 className='subhead-text'>My Skills</h3>
 
-        {/* <div className='mt-16 flex flex-wrap gap-12'>
+        <div className='mt-16 flex flex-wrap gap-12'>
           {skills.map((skill) => (
-            <div className='block-container w-24 h-24'>
+            <div key={skill.name} className='block-container w-24 h-24'>
               <div className='btn-back rounded-xl drop-shadow-md' />
               <div className='btn-front rounded-xl flex justify-center items-center'>
                 <img
@@ -28,18 +31,18 @@ const About = () => {
               </div>
             </div>
           ))}
-        </div> */}
+        </div>
       </div>
 
       <div className='py-16'>
         <h3 className='subhead-text'>Work Experiences</h3>
         <div className='mt-5 flex flex-col gap-3 text-slate-500'>
           <p>
-            I've worked with all sorts of companies, levelling up any skills and teaming up with smart people. Here's the rundown:
+            I&apos;ve worked with all sorts of companies, levelling up any skills and teaming up with smart people. Here&apos;s the rundown:
           </p>
         </div>
         <div className='mt-12 flex'>
-          {/* <VerticalTimeline>
+          <VerticalTimeline>
             {experiences.map((experience) => (
               <VerticalTimelineElement
                 key={experience.company_name}
@@ -83,13 +86,13 @@ const About = () => {
                 </ul>
               </VerticalTimelineElement>
             ))}
-          </VerticalTimeline> */}
+          </VerticalTimeline>
         </div>
       </div>
 
       <hr className='border-slate-200' />
       <div>
-        {/* <CTA /> */}
+        <CTA />
       </div>
     </section>
   )

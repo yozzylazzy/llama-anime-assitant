@@ -32,6 +32,7 @@ const ChatBox = () => {
 
     try {
       let botResponse = await getChatResponse(
+        selectedCharacter,
         newMessages.map((msg) => `${msg.sender}: ${msg.text}`).join("\n")
       );
 
@@ -45,9 +46,9 @@ const ChatBox = () => {
         { sender: "bot", text: botResponse },
       ]);
 
-      const characterEdgeConfig = aiPreferences.filter((aiCharacter) => aiCharacter.id === selectedCharacter)[0].edgeSoundType;
+      const selectedCharacterJson = aiPreferences.filter((aiCharacter) => aiCharacter.id === selectedCharacter)[0]; // return json model for the selected character
 
-      const audioUrl = await generateTTS(botResponse, characterEdgeConfig);
+      const audioUrl = await generateTTS(botResponse, selectedCharacterJson.edgeSoundType, selectedCharacterJson.rate, selectedCharacterJson.volume, selectedCharacterJson.pitch);
       setAudioUrl(audioUrl);
 
       if (audioUrl) {
@@ -123,7 +124,7 @@ const ChatBox = () => {
       <div className="mt-4 flex items-center space-x-2">
         <input
           type="text"
-          placeholder="Type your message for pixiepal..."
+          placeholder={`${isTalking || isTyping ? 'Pixiepal was trying to answer your chat...' : ' Type your message for pixiepal...'}`}
           className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7AB2D3]"
           value={input}
           disabled={isTalking || isTyping ? true : false}

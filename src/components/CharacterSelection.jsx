@@ -9,7 +9,7 @@ window.PIXI = PIXI;
 const CharacterSelection = () => {
   const canvasRef = useRef(null); // referensi untuk ukuran canvasnya
   const [app, setApp] = useState(null);
-  const [selectedModel, setSelectedModel] = useState("https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/tororo/tororo.model.json");
+  const [selectedModel, setSelectedModel] = useState(aiPreferences[0].modelData);
 
   useEffect(() => {
     // Inisialisasi PIXI Application
@@ -146,7 +146,7 @@ const CharacterSelection = () => {
             <div key={index} className="flex flex-col items-center">
               <button
                 onClick={() => setSelectedModel(char.modelData)}
-                className="flex flex-col items-center p-2 border border-gray-300 rounded-2xl shadow hover:bg-gray-100 w-28 h-36 overflow-hidden"
+                className={`flex flex-col items-center p-2 border border-gray-300 rounded-2xl shadow hover:bg-gray-100 w-28 h-36 overflow-hidden ${selectedModel === char.modelData ? 'bg-[#b9e5e8]' : 'bg-[#7ab2d3]'}`}
               >
                 <img
                   src={catPixel}
