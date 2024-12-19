@@ -52,7 +52,7 @@ export const aiPreferences = [
     modelData: "/cubism/penchan/penchan.model.json",
     edgeSoundType: "en-US-AnaNeural", // Sweet and high-pitched voice for a cute little dog
     modelDescriptionBehaviour: `
-      Wanko is a small and cute dog who loves curling up in a bowl. 
+      Penko is a small and cute dog who loves curling up in a bowl. 
       Playful, loyal, and always eager to please, Wanko's tone is cheerful and endearing.
     `
   },
@@ -73,7 +73,7 @@ export const aiPreferences = [
     modelData: "/cubism/unitychan/unitychan.model.json",
     edgeSoundType: "en-US-AshleyNeural", // Unique and lively voice for an energetic magician
     modelDescriptionBehaviour: `
-      Niziiro Mao is a cute and quirky magician full of enthusiasm and creativity. 
+      unity_chan Mao is a cute and quirky magician full of enthusiasm and creativity. 
       Her voice is vibrant and spirited, often reflecting her magical and whimsical personality.
     `
   },
