@@ -12,6 +12,10 @@ const Conversation = () => {
     setOpenSetting((prevState) => !prevState);
   }
 
+  const closeDrawer = () => {
+    setOpenSetting(false);
+  };
+
   return (
     <ChatProvider>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 h-screen relative">
@@ -25,12 +29,6 @@ const Conversation = () => {
 
         {/* Right Chat */}
         <div className="col-span-2 bg-gray-50 p-6 md:col-span-3 px-5 py-20">
-          {/* Button untuk memunculkan konfigurasi character yang dipilih */}
-          {/* <button>
-            <img
-              src={}
-            />
-          </button> */}
           <h1 className="text-2xl font-bold text-gray-800 mb-4" style={{ color: "#4a628a" }}>PixiePal Chat</h1>
           <ChatBox />
         </div>
@@ -45,13 +43,23 @@ const Conversation = () => {
           </button>
         </div>
 
+        {/* Backdrop */}
+        {openSetting && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={closeDrawer}
+          ></div>
+        )}
+
         {/* The User Preferences Drawer */}
-        <div
-          className={`absolute top-0 right-0 w-80 h-full bg-white shadow-lg z-50 transition-transform drawer ${openSetting ? "translate-x-0" : "translate-x-full"
-            }`}>
-          {openSetting ?
-            (<UserPreferences />) : null}
-        </div>
+        {openSetting ?
+          (
+            <div
+              className={`fixed top-0 right-0 w-64 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${openSetting ? "translate-x-0" : "translate-x-full"
+                }`}>
+              <UserPreferences />
+            </div>) : null
+        }
       </div>
     </ChatProvider>
   );

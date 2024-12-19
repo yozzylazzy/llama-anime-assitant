@@ -13,6 +13,7 @@ export const ChatProvider = ({ children }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isTalking, setIsTalking] = useState(false); // State to track if the character is talking
   const [audioUrl, setAudioUrl] = useState(''); // State for audio URL
+  const [selectedCharacter, setSelectedCharacter] = useState('tororo');
 
   return (
     <ChatContext.Provider value={{
@@ -25,7 +26,9 @@ export const ChatProvider = ({ children }) => {
       isTalking,
       setIsTalking,
       audioUrl,
-      setAudioUrl // Expose audio URL and updater
+      setAudioUrl, // Expose audio URL and updater
+      selectedCharacter,
+      setSelectedCharacter
     }}>
       {children}
     </ChatContext.Provider>

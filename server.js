@@ -20,17 +20,19 @@ async function createServer() {
   app.use('/audio', express.static(path.join(__dirname, 'audio')));
 
   app.post("/api/tts", async (req, res) => {
-    const { text, rate, volume, pitch } = req.body;
+    const { text, rate, volume, pitch,  characterEdgeConfig } = req.body;
 
     if (!text) {
       return res.status(400).json({ error: "Text is required." });
     }
 
+    console.log(`Suara yang digunakan ${characterEdgeConfig}`);
+
     try {
       // Initialize the EdgeTTS service
       const edgeTTS = new EdgeTTS();
       // Synthesize the speech with provided options
-      const audioGenerated = await edgeTTS.synthesize(text, 'en-US-AriaNeural', {
+      const audioGenerated = await edgeTTS.synthesize(text, characterEdgeConfig, {
         rate: rate || '0%',  // Speech rate (default to 0%)
         volume: volume || '50%',  // Speech volume (default to 0%)
         pitch: pitch || '10Hz'  // Voice pitch (default to 0Hz)

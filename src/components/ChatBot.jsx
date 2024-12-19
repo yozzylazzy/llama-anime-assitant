@@ -3,12 +3,14 @@ import markdownit from "markdown-it";
 import generateTTS from "../services/tts";
 import { useChat } from "../context/ChatContext";
 import { removeEmojisAndPattern } from "../../lib/utils";
+import { aiPreferences } from "../constants";
 
 const ChatBox = () => {
   const {
     messages, setMessages, input, setInput,
     isTyping, setIsTyping, setIsTalking,
-    setAudioUrl
+    setAudioUrl,
+    selectedCharacter
   } = useChat();
 
   // enable everything
@@ -42,7 +44,9 @@ const ChatBox = () => {
         { sender: "bot", text: botResponse },
       ]);
 
-      const audioUrl = await generateTTS(botResponse);
+      const characterEdgeConfig = aiPreferences.filter((aiCharacter) => aiCharacter.id === selectedCharacter)[0].edgeSoundType;
+
+      const audioUrl = await generateTTS(botResponse, characterEdgeConfig);
       setAudioUrl(audioUrl);
 
       if (audioUrl) {

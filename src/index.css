@@ -60,6 +60,17 @@ body:has(.card[data-color="green"]:hover) {
   transform: translateY(-5px); /* Lift card on hover */
 }
 
+.drawer {
+  transition: transform 0.3s ease-in-out;
+}
+
+.drawer-show {
+  display: block;
+}
+
+.drawer-collapse {
+  display: none;
+}
 
 @layer utilities {
   .max-container {

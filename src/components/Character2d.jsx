@@ -2,22 +2,16 @@ import { useEffect } from "react";
 import * as PIXI from 'pixi.js'; // Import PIXI
 import { Live2DModel } from "pixi-live2d-display-lipsyncpatch";
 import { useChat } from "../context/ChatContext";
+import { aiPreferences } from "../constants";
 
 window.PIXI = PIXI;
 
 const Character2d = () => {
+  const { selectedCharacter } = useChat();
   const { audioUrl, isTalking, setIsTalking } = useChat();
 
   useEffect(() => {
-    // const cubism2Model =
-    //   'https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json';
-    // const cubism2Model =
-    //   'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json';
-    // const cubism2Model = "/cubism/wanko/wanko/runtime/wanko_touch.model3.json";
-    // const cubism2Model = "/cubism/Epsilon/Epsilon/runtime/Epsilon.model3.json";
-    // const cubism2Model = "/cubism/koharu_haruto/koharu_haruto/é¦é-éT/runtime/koharu.model3.json";
-    // const cubism2Model = "/cubism/tororo_hijiki/tororo_hijiki/tororo/runtime/tororo.model3.json";
-    const cubism2Model = "https://raw.githubusercontent.com/zenghongtu/live2d-model-assets/master/assets/moc/tororo/tororo.model.json";
+    const cubism2Model = aiPreferences.filter((aiCharacter) => aiCharacter.id === selectedCharacter)[0].modelData;
 
     // Initialize PIXI application
     const app = new PIXI.Application({
@@ -84,7 +78,7 @@ const Character2d = () => {
       throw new Error(error.message);
     }
 
-  }, [audioUrl, setIsTalking]);
+  }, [audioUrl, setIsTalking, selectedCharacter]);
 
   return (
     <div className="flex justify-center items-center mx-auto">

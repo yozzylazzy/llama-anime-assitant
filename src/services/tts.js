@@ -1,9 +1,9 @@
-const generateTTS = async (text) => {
+const generateTTS = async (text, characterEdgeConfig) => {
   try {
     const response = await fetch("http://localhost:5000/api/tts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, rate: "0%", volume: "50%", pitch: "10Hz" }), // Added default options
+      body: JSON.stringify({ text, rate: "0%", volume: "50%", pitch: "10Hz", characterEdgeConfig: characterEdgeConfig }), // Added default options
     });
 
     const data = await response.json();
