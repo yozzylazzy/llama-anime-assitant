@@ -2,7 +2,6 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import {
   About,
-  Chat,
   Conversation,
   User
 } from './pages';
@@ -18,7 +17,6 @@ const App = () => {
           <Route path="/" element={<Landing />} />
           <Route path="/conversation" element={<Conversation />} />
           <Route path="/about" element={<About />} />
-          <Route path="/chat" element={<Chat />} />
           <Route path="/userPref" element={<User />} />
         </Routes>
       </Router>

@@ -1,14 +1,18 @@
-import { useState } from "react";
 import { catPixel } from "../assets/images"
 import { aiPreferences } from "../constants"
 import { useChat } from "../context/ChatContext";
 
 const UserPreferences = () => {
-  const { selectedCharacter, setSelectedCharacter } = useChat();
+  const { selectedCharacter, setSelectedCharacter, isTalking, isTyping } = useChat();
 
   const handleSelectedCharacter = (characterId) => {
-    setSelectedCharacter(characterId);
-  }
+    // Update character only if it's different
+    if (!isTyping && !isTalking) {
+      if (selectedCharacter !== characterId) {
+        setSelectedCharacter(characterId);
+      }
+    }
+  };
 
   return (
     <div className="w-full h-full py-5 px-3 overflow-y-auto flex justify-center items-start">
@@ -16,7 +20,8 @@ const UserPreferences = () => {
         {aiPreferences.map((char, index) => (
           <div key={index} className="flex items-center">
             <button
-              onClick={() => setSelectedCharacter(char.id)}
+              disabled={isTalking || isTyping ? true : false}
+              onClick={() => handleSelectedCharacter(char.id)} // Call handler explicitly
               className={`flex flex-col items-center p-2 border border-gray-300 rounded-2xl shadow hover:bg-gray-100 w-28 h-36 overflow-hidden
                 ${selectedCharacter === char.id ? 'bg-[#b9e5e8]' : 'bg-[#7ab2d3]'}`}
             >

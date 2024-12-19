@@ -8,6 +8,7 @@ import { aiPreferences } from "../constants";
 const ChatBox = () => {
   const {
     messages, setMessages, input, setInput,
+    isTalking,
     isTyping, setIsTyping, setIsTalking,
     setAudioUrl,
     selectedCharacter
@@ -125,10 +126,12 @@ const ChatBox = () => {
           placeholder="Type your message for pixiepal..."
           className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7AB2D3]"
           value={input}
+          disabled={isTalking || isTyping ? true : false}
           onChange={(e) => setInput(e.target.value)}
         />
         <button
           className="px-4 py-2 bg-[#7AB2D3] text-white rounded-lg hover:bg-[#4A628A] transition duration-300"
+          disabled={isTalking || isTyping ? true : false}
           onClick={handleSend}
         >
           Send

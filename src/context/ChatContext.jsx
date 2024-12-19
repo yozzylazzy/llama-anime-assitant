@@ -13,7 +13,23 @@ export const ChatProvider = ({ children }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isTalking, setIsTalking] = useState(false); // State to track if the character is talking
   const [audioUrl, setAudioUrl] = useState(''); // State for audio URL
-  const [selectedCharacter, setSelectedCharacter] = useState('tororo');
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+
+  // Function to reset all messages
+  const resetMessages = () => {
+    setMessages([{ sender: 'bot', text: 'Hey there! How can I assist you today?' }]); // Reset to initial state
+  };
+
+  // Enhanced setSelectedCharacter to include resetting messages
+  const handleCharacterChange = (characterId) => {
+    if (characterId !== selectedCharacter) {
+      setSelectedCharacter(characterId); // Change character
+      if (audioUrl) {
+        setAudioUrl(null); // Optionally reset audio if the character change requires it
+      }
+      resetMessages(); // Reset messages
+    }
+  };
 
   return (
     <ChatContext.Provider value={{
@@ -28,7 +44,9 @@ export const ChatProvider = ({ children }) => {
       audioUrl,
       setAudioUrl, // Expose audio URL and updater
       selectedCharacter,
-      setSelectedCharacter
+      // setSelectedCharacter,
+      setSelectedCharacter: handleCharacterChange, // Use enhanced handler
+      resetMessages, // Expose resetMessages function
     }}>
       {children}
     </ChatContext.Provider>

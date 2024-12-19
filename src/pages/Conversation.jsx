@@ -4,6 +4,7 @@ import ChatBox from "../components/ChatBot";
 import { ChatProvider } from "../context/ChatContext";
 import { settings } from "../assets/images";
 import UserPreferences from "../components/UserPreferences";
+import SettingButton from "../components/SettingButton";
 
 const Conversation = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -35,12 +36,7 @@ const Conversation = () => {
 
         {/* Floating Settings Button here*/}
         <div className={`flex z-50 float-end absolute top-8 right-8 w-14 h-14 animate-spin ${openSetting ? "right-1/3" : "right-8"}`}>
-          <button
-            onClick={handleSettings}
-            className="rounded-full"
-          >
-            <img src={settings} alt="Settings" />
-          </button>
+          <SettingButton handleSettings={handleSettings} />
         </div>
 
         {/* Backdrop */}
