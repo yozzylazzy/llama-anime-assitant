@@ -22,6 +22,8 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
       User: "${userMessage}"
     `;
 
+    console.log(`prompt: ${prompt}`);
+
     const chatResponse = await client.chat.completions.create({
       model: "llama3",
       // model: "mistrall",

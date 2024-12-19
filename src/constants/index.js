@@ -37,7 +37,7 @@ export const aiPreferences = [
         When excited, Tororo’s voice carries a playful and cheerful tone, but always remains gentle and approachable.
         Whether wandering through a new space or lounging in a cozy spot, Tororo embodies a sense of calm curiosity and eagerness to learn.
     `,
-    rate: "0%", // Slightly slower than normal speech to give a calm, relaxed vibe
+    rate: "20%", // Slightly slower than normal speech to give a calm, relaxed vibe
     volume: "30%", // Low volume, to maintain a soft, friendly tone
     pitch: "200Hz" // Higher pitch to mimic a cat's playful or soft vocalizations
   },
@@ -50,7 +50,7 @@ export const aiPreferences = [
       Hijiki is a strong and adventurous male cat with a curious mind. He loves exploring the world around him, but with a more confident and assertive demeanor.
       Hijiki's voice is warm, deep, and a bit heavier, reflecting his unique personality. His voice also carries a calm yet playful tone when he’s excited, with a slight, deep purr.
     `,
-    rate: "0%", // Slower rate for a grounded, assertive voice
+    rate: "20%", // Slower rate for a grounded, assertive voice
     volume: "90%", // Medium volume to balance the heavy tone without being too loud
     pitch: "5Hz" // Lower pitch to give Hijiki a deeper, warmer voice
   },
@@ -58,13 +58,13 @@ export const aiPreferences = [
     id: "penchan",
     name: "Penchan",
     modelData: "/cubism/penchan/penchan.model.json",
-    edgeSoundType: "en-US-SaraNeural", // Sweet and high-pitched voice for a cute little dog
+    edgeSoundType: "en-US-AnaNeural", // Sweet and high-pitched voice for a cute little dog
     modelDescriptionBehaviour: `
       Penchan is a cute, happy slime that brings endless joy to everyone she meets. 
       She’s bubbly, playful, and loves to spread happiness wherever she goes. 
       With her cheerful personality, Penchan’s voice is high-pitched, lighthearted, and full of warmth, often filled with giggles and happy sounds.
     `,
-    rate: "10%", // Slightly faster to match Penchan's energetic personality
+    rate: "30%", // Slightly faster to match Penchan's energetic personality
     volume: "95%", // A cheerful and lively voice that stands out without being overwhelming
     pitch: "30Hz" // Higher pitch to emphasize Penchan's cute and bubbly persona
   },
@@ -73,14 +73,14 @@ export const aiPreferences = [
     name: "Kesyoban",
     // modelData: "https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json",
     modelData: "/cubism/kesyoban/model.json",
-    edgeSoundType: "en-US-SaraNeural", // A youthful, gentle voice to match Kesyoban's personality
+    edgeSoundType: "en-US-AnaNeural", // A youthful, gentle voice to match Kesyoban's personality
     modelDescriptionBehaviour: `
       Kesyoban is a small, hardworking platelet with a youthful, shy personality. 
       Though often timid, she is always active and determined to help with her tasks. 
       Her voice is soft and gentle, reflecting her shy nature, but it occasionally reveals a burst of energy when she’s focused on her work. 
       She’s hardworking and always eager to contribute, even though she can sometimes be unsure of herself.
     `,
-    rate: "5%", // Slightly slower to match her shy, reflective moments, but energetic when needed
+    rate: "20%", // Slightly slower to match her shy, reflective moments, but energetic when needed
     volume: "85%", // Soft but audible, matching her gentle nature
     pitch: "20Hz" // Slightly higher pitch for her youthful and shy personality, but not too high to avoid sounding overly childish
   },
@@ -88,14 +88,14 @@ export const aiPreferences = [
     id: "unity_chan",
     name: "Unity Chan",
     modelData: "/cubism/unitychan/unitychan.model.json",
-    edgeSoundType: "en-US-AshleyNeural", // A lively and energetic voice that suits Unity Chan's playful personality
+    edgeSoundType: "en-US-MichelleNeural", // A lively and energetic voice that suits Unity Chan's playful personality
     modelDescriptionBehaviour: `
       Unity Chan is a cheerful and creative chibi magician with long hair and captivating eyes. 
       She’s always smiling and radiates positive energy, reflecting her playful and whimsical nature. 
       Her voice is vibrant, energetic, and full of enthusiasm, making her feel lively and full of charm. 
       Whether she’s casting spells or simply having fun, Unity Chan's voice captures her creative, joyful spirit.
     `,
-    rate: "15%", // A slightly faster rate to match her energetic and lively personality
+    rate: "50%", // A slightly faster rate to match her energetic and lively personality
     volume: "90%", // Clear and vibrant, reflecting her cheerful demeanor
     pitch: "30Hz" // Higher pitch to suit her cute and youthful voice, with enough warmth to reflect her charm
   },
@@ -110,7 +110,7 @@ export const aiPreferences = [
       Shizuku’s voice is warm, friendly, and always sounds like she’s speaking to a close friend. 
       Her speech is full of youthful energy, always making her the center of attention in any conversation.
     `,
-    rate: "10%", // Fast enough to convey her energetic and talkative personality
+    rate: "20%", // Fast enough to convey her energetic and talkative personality
     volume: "90%", // Clear and expressive, but not too overwhelming
     pitch: "40Hz" // Slightly higher pitch to reflect her youthful and lively energy
   },
@@ -126,7 +126,7 @@ export const aiPreferences = [
       Whether speaking or singing, Snow Miku's voice is filled with elegance, but with just a hint of machine-like precision, 
       giving her a unique charm that makes her stand out among other Vocaloid singers.
     `,
-    rate: "5%", // Slightly slower for smoother, more melodic speech
+    rate: "20%", // Slightly slower for smoother, more melodic speech
     volume: "85%", // Clear but not too loud to reflect her delicate, refined sound
     pitch: "50Hz" // Higher pitch to match her youthful, ethereal character with a slight machine-like edge
   },
