@@ -81,7 +81,10 @@ const ChatBox = () => {
   };
 
   return (
-    <div className="flex flex-col h-full p-4 bg-gray-100 rounded-lg shadow-lg max-h-svh overflow-y-scroll">
+    <div className="flex flex-col h-full p-4 bg-gray-100 rounded-lg shadow-lg max-h-svh overflow-y-scroll scrollbar-thin"
+      style={{
+        background: "linear-gradient(to right, #DFF2EB, #B9E5E8)",
+      }}>
       {/* Chat Messages */}
       <div className="flex-grow overflow-y-auto space-y-4">
         {messages.map((message, index) => (
@@ -91,23 +94,20 @@ const ChatBox = () => {
               }`}
           >
             <div
-              className={`max-w-xs p-3 rounded-lg ${message.sender === "user"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-300 text-gray-900"
+              className={`max-w-xs p-3 rounded-xl text-lg ${message.sender === "user"
+                ? "bg-[#7AB2D3] text-white"
+                : "bg-gray-300 text-[#4A628A]"
                 }`}
               dangerouslySetInnerHTML={{
                 __html: md.render(message.text),
               }}
             >
-              {/* {textParsed(message.text)} */}
-              {/* {message.text} */}
-              {/* <div dangerouslySetInnerHTML={{ __html: formatMarkdownToHTML(message.text) }} /> */}
             </div>
           </div>
         ))}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="max-w-xs p-3 rounded-lg bg-gray-300 text-gray-900">
+            <div className="max-w-xs p-3 rounded-lg bg-gray-300 text-[#4A628A]">
               ...
             </div>
           </div>
@@ -118,13 +118,13 @@ const ChatBox = () => {
       <div className="mt-4 flex items-center space-x-2">
         <input
           type="text"
-          placeholder="Type your message..."
-          className="flex-grow p-2 border border-gray-300 rounded-lg"
+          placeholder="Type your message for pixiepal..."
+          className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7AB2D3]"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          className="px-4 py-2 bg-[#7AB2D3] text-white rounded-lg hover:bg-[#4A628A] transition duration-300"
           onClick={handleSend}
         >
           Send

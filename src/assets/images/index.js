@@ -12,6 +12,7 @@ import llama from './llama.png'
 import catPixel from './cat-pixel.png';
 import star from './star.png';
 import decor from './decor.png';
+import settings from './settings.png';
 
 export {
     hero,
@@ -27,5 +28,6 @@ export {
     react,
     catPixel,
     star,
-    decor
+    decor,
+    settings
 }
