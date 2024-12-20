@@ -66,7 +66,7 @@ const Character2d = () => {
                     // Extract the audio ID from the URL (filename without extension)
                     const audioId = url.split("/").pop().replace(".mp3", "");
                     // Send a DELETE request to the backend to delete the audio file
-                    await fetch(`http://localhost:5000/audio/${audioId}`, { method: "DELETE" });
+                    await fetch(`https://llama-anime-assitant-api.vercel.app/audio/${audioId}`, { method: "DELETE" });
                     console.log("Audio file deleted successfully.");
                   } catch (error) {
                     console.error("Error deleting audio file:", error);
