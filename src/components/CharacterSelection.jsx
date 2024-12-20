@@ -24,30 +24,20 @@ const CharacterSelection = () => {
 
     // Add resize re render 
     const handleResize = () => {
-      console.log('model resized');
       const model = pixiApp.stage.children[0];
-      console.log(model);
 
       const canvasWidth = canvasRef.current.offsetWidth;
       const canvasHeight = canvasRef.current.offsetHeight;
 
       if (model) {
-        console.log('Masuk ke perubahan');
         model.position.set(canvasWidth / 2, canvasHeight / 2);
-        // Hitung skala dinamis berdasarkan ukuran container
         const modelWidth = model.width;
         const modelHeight = model.height;
 
         const scaleX = canvasWidth / modelWidth;
         const scaleY = canvasHeight / modelHeight;
-        console.log(`ukuran Canvas saat ini: ${canvasWidth}, ${canvasHeight}`);
-        console.log(`ukuran model saat ini: ${modelWidth}, ${modelHeight}`);
-        console.log(`ukuran Scale x dan ScaleY: ${scaleX}, ${scaleY}`);
-        console.log(canvasWidth, canvasHeight);
         const uniformScale = Math.min(scaleX, scaleY);
-        console.log(`ukuran uniformScale saat ini: ${uniformScale}`);
 
-        // Tetapkan skala maksimum
         model.scale.set(uniformScale);
         // model.scale.set(0.2, 0.2);
       }
@@ -103,11 +93,8 @@ const CharacterSelection = () => {
       // interaction
       model.on('hit', (hitAreas) => {
         if (hitAreas.length > 0) {
-          console.log(`Area hit: ${hitAreas}`);
-
           // Ambil grup motion yang ada
           const motionGroups = model.internalModel.motionManager.groups;
-          console.log("Motion groups:", motionGroups);
 
           // Pilih grup animasi yang sesuai (contoh: 'Tap')
           const motionGroup = motionGroups["Tap"] || motionGroups["Idle"] || [];
@@ -117,15 +104,14 @@ const CharacterSelection = () => {
             const randomMotionIndex = Math.floor(Math.random() * motionGroup.length);
             const motionName = motionGroup[randomMotionIndex];
 
-            console.log(`Playing motion: ${motionName}`);
             model.motion("Tap", motionName);
           } else {
-            console.log("No available motions in group 'Tap'.");
+            // console.log("No available motions in group 'Tap'.");
           }
         }
       });
 
-      console.log(model ? 'Model ditemukan' : 'Tidak ada model')
+      // console.log(model ? 'Model ditemukan' : 'Tidak ada model')
 
       try {
         app.stage.addChild(model);

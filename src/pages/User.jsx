@@ -16,9 +16,6 @@ const User = () => {
   const handleCharacterChange = (event) => {
     const character = event.target.value;
     setSelectedCharacter(character);
-
-    // Simulate updating preferences
-    console.log(`Character updated to: ${character}`);
   };
 
   return (

@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
-.env.local
+.env.development
+.env.production
 
 audio

@@ -26,8 +26,6 @@ async function createServer() {
       return res.status(400).json({ error: "Text is required." });
     }
 
-    console.log(`Suara yang digunakan ${characterEdgeConfig}`);
-
     try {
       // Initialize the EdgeTTS service
       const edgeTTS = new EdgeTTS();

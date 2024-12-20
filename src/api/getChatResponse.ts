@@ -1,10 +1,18 @@
 import OpenAI from "openai";
 import { aiPreferences } from "../constants";
 
+const MAX_MESSAGE_LENGTH = 1000;
+
 const getChatResponse = async (selectedModel: string, userMessage: string) => {
+  const isProduction = import.meta.env.MODE === "production";
+
+  if (isProduction && userMessage.length > MAX_MESSAGE_LENGTH) {
+    return `I'm sorry, your message is too long, the maximal message send is ${MAX_MESSAGE_LENGTH} char.`;
+  }
+
   const client = new OpenAI({
-    apiKey: "ollama",
-    baseURL: "http://localhost:11434/v1",
+    apiKey: `${import.meta.env.VITE_OPEN_API_KEY}`,
+    baseURL: `${import.meta.env.VITE_OPEN_API_HOST}`,
     dangerouslyAllowBrowser: true,
   });
 
@@ -22,10 +30,10 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
       User: "${userMessage}"
     `;
 
-    console.log(`prompt: ${prompt}`);
+    // console.log(`prompt: ${prompt}`);
 
     const chatResponse = await client.chat.completions.create({
-      model: "llama3",
+      model: `${import.meta.env.VITE_AI_MODEL}`,
       // model: "mistrall",
       // messages: message,
       messages: [
@@ -36,6 +44,7 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
         },
       ],
       temperature: 0.7,
+      max_tokens: 300, // Batas jumlah token untuk respons
     });
 
     const response =
@@ -43,7 +52,7 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
       "Sorry, there was a problem!";
     return response;
   } catch (error) {
-    console.error("Error in API request:", error);
+    // console.error("Error in API request:", error);
     return "Sorry, I couldn't fetch a response.";
   }
 };

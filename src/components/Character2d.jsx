@@ -30,7 +30,6 @@ const Character2d = () => {
 
     // Remove the previous model if exists
     if (modelRef.current) {
-      console.log('Remove the previous model if exists');
       app.stage.removeChild(modelRef.current);
       modelRef.current.destroy(); // Properly destroy the old model
       modelRef.current = null;
@@ -39,7 +38,7 @@ const Character2d = () => {
     try {
       if (cubism2Model) {
         // Load Live2D model
-        Live2DModel.from(cubism2Model, { autoHitTest: false, autoFocus: false }).then((model) => {
+        Live2DModel.from(cubism2Model, { autoHitTest: false, autoFocus: false, }).then((model) => {
           modelRef.current = model;
           app.stage.addChild(model);
 
@@ -66,8 +65,7 @@ const Character2d = () => {
                     // Extract the audio ID from the URL (filename without extension)
                     const audioId = url.split("/").pop().replace(".mp3", "");
                     // Send a DELETE request to the backend to delete the audio file
-                    await fetch(`https://llama-anime-assitant-api.vercel.app/audio/${audioId}`, { method: "DELETE" });
-                    console.log("Audio file deleted successfully.");
+                    await fetch(`${import.meta.env.VITE_PIXIEPAL_ASSISTANT_BE}/audio/${audioId}`, { method: "DELETE" });
                   } catch (error) {
                     console.error("Error deleting audio file:", error);
                   }
@@ -89,7 +87,7 @@ const Character2d = () => {
     } catch (error) {
       throw new Error(error.message);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioUrl, setIsTalking, selectedCharacter]);
 
   return (
