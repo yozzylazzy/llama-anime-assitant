@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+import axios from "axios";
 import { aiPreferences } from "../constants";
 
 const MAX_MESSAGE_LENGTH = 1000;
@@ -10,12 +10,6 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
     return `I'm sorry, your message is too long, the maximal message send is ${MAX_MESSAGE_LENGTH} char.`;
   }
 
-  const client = new OpenAI({
-    apiKey: `${import.meta.env.VITE_OPEN_API_KEY}`,
-    baseURL: `${import.meta.env.VITE_OPEN_API_HOST}`,
-    dangerouslyAllowBrowser: true,
-  });
-
   const character = aiPreferences.find((char) => char.id === selectedModel);
   const modelDesc = character ? character.modelDescriptionBehaviour : "";
 
@@ -25,34 +19,41 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
       You are the character called ${character?.name}. 
       Your behavior is as follows:
       ${modelDesc}
-
-      Respond to the following user message in your character's voice and tone:
-      User: "${userMessage}"
     `;
 
-    // console.log(`prompt: ${prompt}`);
-
-    const chatResponse = await client.chat.completions.create({
-      model: `${import.meta.env.VITE_AI_MODEL}`,
-      // model: "mistrall",
-      // messages: message,
-      messages: [
-        {
-          role: "user",
-          // content: userMessage,
-          content: prompt,
+    // Make the API call using axios
+    const response = await axios.post(
+      `${import.meta.env.VITE_OPEN_API_HOST}/chat/completions`,
+      {
+        model: `${import.meta.env.VITE_AI_MODEL}`,
+        messages: [
+          {
+            role: "system",
+            content: prompt,
+          },
+          {
+            role: "user",
+            content: userMessage, // Use the userMessage for the user prompt
+          },
+        ],
+        temperature: 0.7,
+        max_tokens: 300,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_OPEN_API_KEY}`,
         },
-      ],
-      temperature: 0.7,
-      max_tokens: 300, // Batas jumlah token untuk respons
-    });
+      }
+    );
 
-    const response =
-      chatResponse.choices[0]?.message?.content?.trim() ||
+    // Handle response
+    const chatResponse =
+      response.data.choices[0]?.message?.content?.trim() ||
       "Sorry, there was a problem!";
-    return response;
+    return chatResponse;
   } catch (error) {
-    // console.error("Error in API request:", error);
+    console.error("Error in API request:", error);
     return "Sorry, I couldn't fetch a response.";
   }
 };

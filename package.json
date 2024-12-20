@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@andresaya/edge-tts": "^1.2.4",
+    "axios": "^1.7.9",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
