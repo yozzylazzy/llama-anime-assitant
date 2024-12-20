@@ -38,24 +38,19 @@ const CharacterSelection = () => {
         const scaleY = canvasHeight / modelHeight;
         const uniformScale = Math.min(scaleX, scaleY);
 
+        // TODO: Perbaiki useEffect ini karena modelnya disaat dikecilkan berubah besar sekali dulu baru jadi kecil lagi
         model.scale.set(uniformScale);
-        // model.scale.set(0.2, 0.2);
       }
     };
     window.addEventListener("resize", handleResize);
     return () => {
-
-      // Periksa apakah ada model2 di dalam pixiApp ini
-      // Jika ada maka hapus agar tidak bertabrakan dengan webGL lainnya saat berpindah halaman
       if (pixiApp.stage.children.length > 0) {
         pixiApp.stage.children.forEach((child) => {
           if (child instanceof Live2DModel) {
-            // If instance of Live2DModel then delete the child
             child.destroy();
           }
         });
       }
-
       window.removeEventListener("resize", handleResize);
       pixiApp.destroy(true, { children: true, texture: true, baseTexture: true });
     };
@@ -64,54 +59,24 @@ const CharacterSelection = () => {
   useEffect(() => {
     if (!app || !selectedModel) return;
 
-    // Hapus semua anak sebelum menambahkan yang baru
-    // app.stage.removeChildren();
-
-    // Check if app.stage is defined before removing children
     if (app.stage) {
-      app.stage.removeChildren(); // Remove all children before adding the new model
+      app.stage.removeChildren();
     }
 
     const canvasWidth = canvasRef.current.offsetWidth;
     const canvasHeight = canvasRef.current.offsetHeight;
 
-    // Tambahkan model Live2D
     Live2DModel.from(selectedModel).then((model) => {
       model.anchor.set(0.5, 0.5);
       model.position.set(canvasWidth / 2, canvasHeight / 2);
 
-      // model.scale.set(0.2, 0.2);
-      // Hitung skala dinamis berdasarkan ukuran container
       const modelWidth = model.width;
       const modelHeight = model.height;
       const scaleX = canvasWidth / modelWidth;
       const scaleY = canvasHeight / modelHeight;
       const uniformScale = Math.min(scaleX, scaleY); // *0.9 untuk memberikan sedikit margin
 
-      model.scale.set(uniformScale, uniformScale);
-
-      // interaction
-      model.on('hit', (hitAreas) => {
-        if (hitAreas.length > 0) {
-          // Ambil grup motion yang ada
-          const motionGroups = model.internalModel.motionManager.groups;
-
-          // Pilih grup animasi yang sesuai (contoh: 'Tap')
-          const motionGroup = motionGroups["Tap"] || motionGroups["Idle"] || [];
-
-          if (motionGroup.length > 0) {
-            // Pilih animasi secara acak
-            const randomMotionIndex = Math.floor(Math.random() * motionGroup.length);
-            const motionName = motionGroup[randomMotionIndex];
-
-            model.motion("Tap", motionName);
-          } else {
-            // console.log("No available motions in group 'Tap'.");
-          }
-        }
-      });
-
-      // console.log(model ? 'Model ditemukan' : 'Tidak ada model')
+      model.scale.set(uniformScale);
 
       try {
         app.stage.addChild(model);

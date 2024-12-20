@@ -84,6 +84,18 @@ const Character2d = () => {
 
         });
       }
+
+      const handleResize = () => {
+        if (modelRef.current) {
+          modelRef.current.scale.set(0.3);
+          modelRef.current.position.set(window.innerWidth / 2, window.innerHeight / 2);
+        }
+      };
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+
     } catch (error) {
       throw new Error(error.message);
     }
@@ -92,7 +104,7 @@ const Character2d = () => {
 
   return (
     <div className="flex justify-center items-center mx-auto">
-      <canvas id="canvas" style={{ background: "transparent" }}></canvas>
+      <canvas id="canvas" style={{ background: "transparent", touchAction: "pan-y", msTouchAction: "pan-y" }}></canvas>
     </div>
   )
 }
