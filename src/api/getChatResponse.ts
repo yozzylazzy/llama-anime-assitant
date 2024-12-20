@@ -14,14 +14,12 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
   const modelDesc = character ? character.modelDescriptionBehaviour : "";
 
   try {
-    // Combine the model description and user message to form the prompt
     const prompt = `
       You are the character called ${character?.name}. 
       Your behavior is as follows:
       ${modelDesc}
     `;
 
-    // Make the API call using axios
     const response = await axios.post(
       `${import.meta.env.VITE_OPEN_API_HOST}/chat/completions`,
       {
@@ -33,7 +31,7 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
           },
           {
             role: "user",
-            content: userMessage, // Use the userMessage for the user prompt
+            content: userMessage,
           },
         ],
         temperature: 0.7,
@@ -47,7 +45,6 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
       }
     );
 
-    // Handle response
     const chatResponse =
       response.data.choices[0]?.message?.content?.trim() ||
       "Sorry, there was a problem!";
