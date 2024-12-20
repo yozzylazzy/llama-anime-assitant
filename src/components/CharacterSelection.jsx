@@ -37,11 +37,18 @@ const CharacterSelection = () => {
         // Hitung skala dinamis berdasarkan ukuran container
         const modelWidth = model.width;
         const modelHeight = model.height;
+
         const scaleX = canvasWidth / modelWidth;
         const scaleY = canvasHeight / modelHeight;
-        const uniformScale = Math.min(scaleX, scaleY); // *0.9 untuk memberikan sedikit margin
+        console.log(`ukuran Canvas saat ini: ${canvasWidth}, ${canvasHeight}`);
+        console.log(`ukuran model saat ini: ${modelWidth}, ${modelHeight}`);
+        console.log(`ukuran Scale x dan ScaleY: ${scaleX}, ${scaleY}`);
+        console.log(canvasWidth, canvasHeight);
+        const uniformScale = Math.min(scaleX, scaleY);
+        console.log(`ukuran uniformScale saat ini: ${uniformScale}`);
 
-        model.scale.set(uniformScale, uniformScale);
+        // Tetapkan skala maksimum
+        model.scale.set(uniformScale);
         // model.scale.set(0.2, 0.2);
       }
     };

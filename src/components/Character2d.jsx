@@ -16,14 +16,6 @@ const Character2d = () => {
     if (selectedCharacter) cubism2Model = aiPreferences.filter((aiCharacter) => aiCharacter.id === selectedCharacter)[0].modelData;
     if (!selectedCharacter) setSelectedCharacter(aiPreferences[0].id);
 
-    // Initialize PIXI application
-    // const app = new PIXI.Application({
-    //   view: document.getElementById('canvas'),
-    //   autoStart: true,
-    //   resizeTo: window,
-    //   backgroundAlpha: 0, // Transparent background
-    // });
-
     // Initialize PIXI application once
     if (!appRef.current) {
       appRef.current = new PIXI.Application({
@@ -55,13 +47,6 @@ const Character2d = () => {
           model.anchor.set(0.5, 0.5);
           model.position.set(window.innerWidth / 2, window.innerHeight / 2);
           model.scale.set(0.3, 0.3);
-
-          // Handle window resize
-          const handleResize = () => {
-            model.position.set(window.innerWidth / 2, window.innerHeight / 2);
-            model.scale.set(0.3, 0.3);
-          };
-          window.addEventListener('resize', handleResize);
 
           const playAudio = async (url) => {
             if (!url) return;
@@ -99,14 +84,12 @@ const Character2d = () => {
             playAudio(audioUrl);
           }
 
-          return () => {
-            window.removeEventListener('resize', handleResize);
-          };
         });
       }
     } catch (error) {
       throw new Error(error.message);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioUrl, setIsTalking, selectedCharacter]);
 
   return (

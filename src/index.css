@@ -102,7 +102,7 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .header {
-    @apply justify-between items-center sm:px-8 px-8 py-4 max-w-5xl mx-auto absolute top-0 bg-transparent z-10 right-0 left-0;
+    @apply justify-between items-center sm:px-8 px-8 py-7 max-w-6xl mx-auto absolute top-0 bg-transparent z-10 right-0 left-0;
   }
 
   .footer {
@@ -126,7 +126,7 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .cta-text {
-    @apply text-black-500 font-extrabold flex-1 text-3xl max-md:text-center;
+    @apply text-[#4A628A] font-extrabold flex-1 text-3xl max-md:text-center;
   }
 }
 

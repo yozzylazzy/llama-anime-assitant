@@ -7,7 +7,7 @@ const HeroSection = () => {
     <section className="px-8 md:px-16 2xl:px-32 min-h-svh md:max-h-svh flex justify-start md:justify-center items-center">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
         {/* Left Side */}
-        <div className="col-span-1 md:col-span-2 flex flex-col gap-10 justify-between">
+        <div className="col-span-1 mt-20 md:mt-0 md:col-span-2 flex flex-col gap-10 justify-between">
           <div className="relative">
             {/* Decorative Images */}
             <img
@@ -18,7 +18,7 @@ const HeroSection = () => {
             <img
               src={star}
               alt="star"
-              className="absolute md:-top-20 md:-right-28 w-24 md:w-3/6 opacity-70 z-0"
+              className="absolute -top-7 md:-top-20 right-0 md:-right-28 w-24 md:w-3/6 opacity-70 z-0"
             />
             <h1 className="text-5xl md:text-8xl font-bold"
               style={{
@@ -26,12 +26,8 @@ const HeroSection = () => {
               }}>
               PIXIE-PAL ASSISTANT
             </h1>
-            <p className="mt-6 text-2xl text-gray-600 leading-relaxed"
-              style={{
-                color: '#7ab2d3',
-              }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore.
+            <p className="mt-6 text-2xl text-gray-600 leading-relaxed" style={{ color: '#7ab2d3' }}>
+              Your smart assistant, ready to simplify your tasks and enhance productivity. Let&apos;s get started!
             </p>
           </div>
           <div>

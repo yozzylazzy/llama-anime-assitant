@@ -1,18 +1,22 @@
 import {
-  mongodb,
+  // mongodb,
   express,
   react,
   edge,
   llama,
+  cubism,
+  node
 } from "../assets/images";
 
 const Feature = () => {
   const icons = [
-    mongodb,
+    // mongodb,
     express,
     react,
+    node,
     edge,
     llama,
+    cubism,
   ];
 
   return (

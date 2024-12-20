@@ -13,6 +13,9 @@ import catPixel from './cat-pixel.png';
 import star from './star.png';
 import decor from './decor.png';
 import settings from './settings.png';
+import cubism from './cubism.png';
+import node from './node.png';
+import backgroundDescLanding from './background.png';
 
 export {
     hero,
@@ -29,5 +32,8 @@ export {
     catPixel,
     star,
     decor,
-    settings
+    settings,
+    cubism,
+    node,
+    backgroundDescLanding
 }
