@@ -104,7 +104,7 @@ const Character2d = () => {
 
   return (
     <div className="flex justify-center items-center mx-auto">
-      <canvas id="canvas" style={{ background: "transparent", touchAction: "pan-y", msTouchAction: "pan-y" }}></canvas>
+      <canvas id="canvas" style={{ background: "transparent" }}></canvas>
     </div>
   )
 }

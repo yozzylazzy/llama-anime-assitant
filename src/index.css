@@ -22,6 +22,11 @@ body:has(.card[data-color="green"]:hover) {
   background-color: rgb(var(--green-rgb) / 25%);
 }
 
+#canvas {
+  touch-action: pan-y !important;
+  -ms-touch-action: pan-y !important;
+}
+
 /* index.css */
 
 .nav-link {
