@@ -57,12 +57,7 @@ Need to know, this step doesn't include the edge-TTS. I'm divide the edge-TTS to
 Why i need to seperate this one? 
 1. When i'm trying to publish on vercel, it can't detect as an express API, so it's just run as VITE + REACT project that vercel know
 2. I don't know but i have try the custom run command on vercel, however this one doesn't working
-3. Ensure your command line recognizes the Ollama environment.  
-   Why is this necessary? Because we need it to install all the LLM models in the Ollama app.  
-   For this project, we use the open-source **Llama 3** (with 8B parameters).  
-   Run the following command:  
-   ```bash
-   ollama run llama3
+3. The edge-TTS express API need a tmp folder for making the temporary audio file, so that's why i prefer to seperate it from the FrontEnd version.
 4. I don't want to ruin the Vite + React framework structure, and yet, when you deploy an express BE to Vercel (as Serverless Function), it's still need some refactoring and adjustment so Vercel can know that it's an Express Rest API
 
 And that's the reason for the seperated project of FE and BE of PixiePal Assistant, however, the response from the LLM doesn't disturbed by it, because the LLM API I'm trying fetching it from the FE itself (For further improvement i think it would be better on the BackEnd Project) 
