@@ -20,30 +20,13 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
       ${modelDesc}
     `;
 
-    const response = await axios.post(
-      `${import.meta.env.VITE_OPEN_API_HOST}/chat/completions`,
-      {
-        model: `${import.meta.env.VITE_AI_MODEL}`,
-        messages: [
-          {
-            role: "system",
-            content: prompt,
-          },
-          {
-            role: "user",
-            content: userMessage,
-          },
-        ],
-        temperature: 0.7,
-        max_tokens: 300,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_OPEN_API_KEY}`,
-        },
-      }
-    );
+    const response = await axios.post("/api/chat", {
+      model: import.meta.env.VITE_AI_MODEL,
+      messages: [
+        { role: "system", content: prompt },
+        { role: "user", content: userMessage },
+      ],
+    });
 
     const chatResponse =
       response.data.choices[0]?.message?.content?.trim() ||
