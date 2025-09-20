@@ -20,13 +20,16 @@ const getChatResponse = async (selectedModel: string, userMessage: string) => {
       ${modelDesc}
     `;
 
-    const response = await axios.post("/api/chat", {
-      model: import.meta.env.VITE_AI_MODEL,
-      messages: [
-        { role: "system", content: prompt },
-        { role: "user", content: userMessage },
-      ],
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_PIXIEPAL_ASSISTANT_BE}/api/chat`,
+      {
+        model: import.meta.env.VITE_AI_MODEL,
+        messages: [
+          { role: "system", content: prompt },
+          { role: "user", content: userMessage },
+        ],
+      }
+    );
 
     const chatResponse =
       response.data.choices[0]?.message?.content?.trim() ||

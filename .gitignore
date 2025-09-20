@@ -28,3 +28,4 @@ dist-ssr
 
 audio
 .env
+*.vercel
