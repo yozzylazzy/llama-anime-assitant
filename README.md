@@ -43,6 +43,27 @@ This project, **PixiePal Assistant**, would not have been possible without the o
 
 Please note that **PixiePal Assistant is not intended for commercial use due to asset licensing agreements**. However, it is free to use for anyone looking for an adorable and functional smart AI assistant.
 
+## How To Run Locally
+There's some easy step to run this project locally: 
+1. Clone this repository to your local folder using `git clone https://github.com/yozzylazzy/llama-anime-assitant.git`
+2. Before we trying to install and run the project, you need to install Ollama first here [link](https://www.ollama.com/download)
+3. Then you need to ensure your cmd know the ollama env. Why? because we need it to install all the LLM Model on Ollama Apps. For this project I'm using the open source Illama 3 (which have 8B params). Run `ollama run llama3`
+4. Then we can continue on our PixiePal Assistant Project
+5. Run `npm install` on this project folder
+6. Run `npm run dev` to run on development mode using Vite + React (Port 5173)
+7. There you go, now you can run the project locally, free (no need to pay the API for LLM), however the respond time still depends on your computer specification.
+
+Need to know, this step doesn't include the edge-TTS. I'm divide the edge-TTS to the Backend Project of PIXIEPAL ASSISTANT. (The repository still private because of the untidy ENV)
+Why i need to seperate this one? 
+1. When i'm trying to publish on vercel, it can't detect as an express API, so it's just run as VITE + REACT project that vercel know
+2. I don't know but i have try the custom run command on vercel, however this one doesn't working
+3. The edge-TTS express API need a tmp folder for making the temporary audio file, so that's why i prefer to seperate it from the FrontEnd version.
+4. I don't want to ruin the Vite + React framework structure, and yet, when you deploy an express BE to Vercel (as Serverless Function), it's still need some refactoring and adjustment so Vercel can know that it's an Express Rest API
+
+And that's the reason for the seperated project of FE and BE of PixiePal Assistant, however, the response from the LLM doesn't disturbed by it, because the LLM API I'm trying fetching it from the FE itself (For further improvement i think it would be better on the BackEnd Project) 
+
+And... because of the untidy of the ENV (because i'm making it on a hurry - why? MANY FAILED ATTEMPT I'M DOING ON THE PROJECT HAHAHA), The BE Project still in private, however if you insist on looking for it, I can add you as a collaborator, thanks for the understanding 😊
+
 ## Motivational Note
 
 >***Great ideas don’t come with perfect timing**—they arise from curiosity and the persistence to bring them to life. **Through hard work**, countless iterations, and leveraging the power of the open-source community, **PixiePal Assistant has transformed from a simple concept to a reality**. Let this project inspire you to believe in your creativity, no matter how limited your time or resources may seem.*
